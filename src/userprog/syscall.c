@@ -11,7 +11,7 @@ static void syscall_handler (struct intr_frame *);
 /* A system call. */
 struct system_call {
   int argc;                        /* # of args, including action name. */
-  void (*function)(char **argv);   /* Function to execute action. */
+  void (*function)(void **argv);   /* Function to execute action. */
 };
 
 /* The idea here is to create an array of this, and the first element
@@ -24,40 +24,40 @@ write_helper(int fd, const void *buffer, unsigned size) {
 }
 
 static void
-halt(char **argv) {
+halt(void **argv) {
 }
 
 static void
-exit(char **argv) {
+exit(void **argv) {
 }
 
 static void
-exec(char **argv) {
+exec(void **argv) {
 }
 static void
-wait(char **argv) {
+wait(void **argv) {
 }
 static void
-create(char **argv) {
+create(void **argv) {
 }
 static void
-remove(char **argv) {
+remove(void **argv) {
 }
 static void
-open(char **argv) {
+open(void **argv) {
 }
 static void
-file_size(char **argv) {
+file_size(void **argv) {
 }
 static void
-read(char **argv) {
+read(void **argv) {
 }
 
 // argv should be void pointers
 // this function will dereference the pointer, at this stage all pointer should
 // be valid.
 static void
-write(char **argv) {
+write(void **argv) {
   int fd = *((int *) argv[0]);
   const void *buffer = argv[1];
   unsigned size = *((unsigned *) argv[2]);
@@ -65,15 +65,15 @@ write(char **argv) {
 }
 
 static void
-seek(char **argv) {
+seek(void **argv) {
 }
 
 static void
-tell(char **argv) {
+tell(void **argv) {
 }
 
 static void
-close(char **argv) {
+close(void **argv) {
 }
 
 static const struct system_call actions[] =
