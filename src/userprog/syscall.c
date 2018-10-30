@@ -94,7 +94,7 @@ static const struct system_call system_calls[] =
         {0, NULL},
     };
 
-static void **getArgs(int num, void *esp) {
+static void **get_args(int num, void *esp) {
   void **args = malloc(sizeof(void *) * num);
 
   for (int i = 0; i < num; i++) {
@@ -120,7 +120,7 @@ syscall_handler (struct intr_frame *f UNUSED)
   printf ("original esp pointers:%p\n", f->esp);
 
   struct system_call system_call = system_calls[*((long *) f->esp)];
-  void **args = getArgs(system_call.argc, f->esp);
+  void **args = get_args(system_call.argc, f->esp);
   system_call.function(args);
   thread_exit ();
 }
