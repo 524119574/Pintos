@@ -10,8 +10,8 @@ static void syscall_handler (struct intr_frame *);
 
 /* A system call. */
 struct system_call {
-  int argc;                        /* # of args, including action name. */
-  void (*function)(void **argv);   /* Function to execute action. */
+  int argc;                        /* # of args */
+  void (*function)(void **argv);   /* Function to handle the system call. */
 };
 
 /* The idea here is to create an array of this, and the first element
@@ -24,40 +24,40 @@ write_helper(int fd, const void *buffer, unsigned size) {
 }
 
 static void
-halt(void **argv) {
+halt_handler(void **argv) {
 }
 
 static void
-exit(void **argv) {
+exit_handler(void **argv) {
 }
 
 static void
-exec(void **argv) {
+exec_handler(void **argv) {
 }
 static void
-wait(void **argv) {
+wait_handler(void **argv) {
 }
 static void
-create(void **argv) {
+create_handler(void **argv) {
 }
 static void
-remove(void **argv) {
+remove_handler(void **argv) {
 }
 static void
-open(void **argv) {
+open_handler(void **argv) {
 }
 static void
-file_size(void **argv) {
+file_size_handler(void **argv) {
 }
 static void
-read(void **argv) {
+read_handler(void **argv) {
 }
 
 // argv should be void pointers
 // this function will dereference the pointer, at this stage all pointer should
 // be valid.
 static void
-write(void **argv) {
+write_handler(void **argv) {
   int fd = *((int *) argv[0]);
   const void *buffer = argv[1];
   unsigned size = *((unsigned *) argv[2]);
@@ -65,32 +65,32 @@ write(void **argv) {
 }
 
 static void
-seek(void **argv) {
+seek_handler(void **argv) {
 }
 
 static void
-tell(void **argv) {
+tell_handler(void **argv) {
 }
 
 static void
-close(void **argv) {
+close_handler(void **argv) {
 }
 
 static const struct system_call system_calls[] =
     {
-        {0, halt},       // halt
-        {1, exit},       // exit
-        {1, exec},       // exec
-        {1, wait},       // wait
-        {2, create},     // create
-        {1, remove},     // remove
-        {1, open},       // open
-        {1, file_size},  // file_size
-        {3, read},       // read
-        {3, write},      // write
-        {2, seek},       // seek
-        {1, tell},       // tell
-        {1, close},      // close
+        {0, halt_handler},       // halt
+        {1, exit_handler},       // exit
+        {1, exec_handler},       // exec
+        {1, wait_handler},       // wait
+        {2, create_handler},     // create
+        {1, remove_handler},     // remove
+        {1, open_handler},       // open
+        {1, file_size_handler},  // file_size
+        {3, read_handler},       // read
+        {3, write_handler},      // write
+        {2, seek_handler},       // seek
+        {1, tell_handler},       // tell
+        {1, close_handler},      // close
         {0, NULL},
     };
 
