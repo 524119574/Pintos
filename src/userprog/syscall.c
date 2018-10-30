@@ -78,8 +78,8 @@ close(void **argv) {
 
 static const struct system_call system_calls[] =
     {
-        {1, halt},       // halt
-        {1, exit},       // exit
+        {0, halt},       // halt
+        {0, exit},       // exit
         {1, exec},       // exec
         {1, wait},       // wait
         {2, create},     // create
@@ -98,6 +98,7 @@ static void **getArgs(int num, void *esp) {
   void **args = malloc(sizeof(void *) * num);
 
   for (int i = 0; i < num; i++) {
+    // TODO: pointer validation code goes into here.
     args[i] = (esp - (1 + i) * sizeof(void *));
     printf("pointers:%p\n", args[i]);
   }
