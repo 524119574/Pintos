@@ -79,7 +79,7 @@ close(void **argv) {
 static const struct system_call system_calls[] =
     {
         {0, halt},       // halt
-        {0, exit},       // exit
+        {1, exit},       // exit
         {1, exec},       // exec
         {1, wait},       // wait
         {2, create},     // create
