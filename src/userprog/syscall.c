@@ -76,29 +76,29 @@ static void
 close(void **argv) {
 }
 
-static const struct system_call actions[] =
+static const struct system_call system_calls[] =
     {
-        {1, halt},  // halt
-        {1, exit},  // exit
-        {1, exec},  // exec
-        {1, wait},  // wait
-        {2, create},  // create
-        {1, remove},  // remove
-        {1, open},  // open
+        {1, halt},       // halt
+        {1, exit},       // exit
+        {1, exec},       // exec
+        {1, wait},       // wait
+        {2, create},     // create
+        {1, remove},     // remove
+        {1, open},       // open
         {1, file_size},  // file_size
-        {3, read},  // read
-        {3, write},  // write
-        {2, seek},  // seek
-        {1, tell},  // tell
-        {1, close},  // close
-        {NULL, 0, NULL},
+        {3, read},       // read
+        {3, write},      // write
+        {2, seek},       // seek
+        {1, tell},       // tell
+        {1, close},      // close
+        {0, NULL},
     };
 
 static void **getArgs(int num, void *esp) {
   void **args = malloc(sizeof(void *) * num);
 
   for (int i = 0; i < num; i++) {
-    args[i] = (esp - (1 + i) * 4);
+    args[i] = (esp - (1 + i) * sizeof(void *));
     printf("pointers:%p\n", args[i]);
   }
   return args;
@@ -118,7 +118,7 @@ syscall_handler (struct intr_frame *f UNUSED)
   printf ("num: %d\n", *((int *) f->esp) - 1);
   printf ("original esp pointers:%p\n", f->esp);
 
-  struct system_call system_call = actions[*((long *) f->esp)];
+  struct system_call system_call = system_calls[*((long *) f->esp)];
   void **args = getArgs(system_call.argc, f->esp);
   system_call.function(args);
   thread_exit ();
