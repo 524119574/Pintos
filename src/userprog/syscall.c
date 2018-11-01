@@ -4,6 +4,7 @@
 #include "threads/interrupt.h"
 #include "threads/thread.h"
 #include "lib/syscall-nr.h"
+#include "console.h"
 
 static void syscall_handler (struct intr_frame *);
 
@@ -123,4 +124,14 @@ syscall_handler (struct intr_frame *f UNUSED)
   void **args = get_args(system_call.argc, f->esp);
   system_call.function(args);
   thread_exit ();
+}
+
+int
+write (int fd, const void *buffer, unsigned length) 
+{
+  if (fd == 1) {
+    // writes to console
+    putbuf((const char *)buffer, length);
+    return length;
+  }
 }
