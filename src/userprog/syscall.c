@@ -12,7 +12,7 @@ syscall_init (void)
   intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
 }
 
-void
+NO_RETURN void
 exit (int status)
 {
   thread_current()->exit_status = status;
