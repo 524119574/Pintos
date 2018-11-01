@@ -15,9 +15,6 @@ struct system_call {
   void (*function)(void **argv);   /* Function to handle the system call. */
 };
 
-/* The idea here is to create an array of this, and the first element
- * in the array corresponding to the SYS_HALT, second to SYS_EXIT and so on.
- * Basically one can expect to use */
 static void
 write_helper(int fd, const void *buffer, unsigned size) {
   printf("in the helper.\n");
@@ -77,6 +74,11 @@ static void
 close_handler(void **argv) {
 }
 
+/* The idea here is to create an array of `struct system_call`,
+ * and the first element in the array corresponding to the SYS_HALT,
+ * second to SYS_EXIT and so on. Basically one can expect to use
+ * system_calls[SYS_HALT] to get the `struct system_call`
+ * corresponding to the SYS_HALT. */
 static const struct system_call system_calls[] =
     {
         {0, halt_handler},       // halt
