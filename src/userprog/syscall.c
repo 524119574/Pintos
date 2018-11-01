@@ -115,7 +115,7 @@ syscall_init (void)
 }
 
 static void
-syscall_handler (struct intr_frame *f UNUSED) 
+syscall_handler (struct intr_frame *f UNUSED)
 {
   printf ("system call!\n");
   printf ("num: %li\n", *((long *) f->esp));
@@ -126,6 +126,13 @@ syscall_handler (struct intr_frame *f UNUSED)
   void **args = get_args(system_call.argc, f->esp);
   system_call.function(args);
   thread_exit ();
+}
+
+NO_RETURN void
+exit (int status)
+{
+  thread_current()->exit_status = status;
+  thread_exit();
 }
 
 int
