@@ -100,7 +100,7 @@ struct thread {
   /* Owned by userprog/process.c. */
   uint32_t *pagedir;                  /* Page directory. */
 
-  int exit_status;
+  int exit_status;                    /* Exit status. */
 #endif
 
   /* Owned by thread.c. */

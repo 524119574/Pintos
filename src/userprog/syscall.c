@@ -20,7 +20,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 }
 
 void
-exit (int status) NO_RETURN {
+exit (int status) {
   thread_current()->exit_status = status;
   thread_exit();
 }
