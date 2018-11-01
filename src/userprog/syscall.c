@@ -1,5 +1,4 @@
 #include "userprog/syscall.h"
-#include <hash.h>
 #include <stdio.h>
 #include <syscall-nr.h>
 #include "threads/interrupt.h"
@@ -22,10 +21,11 @@ syscall_handler (struct intr_frame *f UNUSED)
 }
 
 int
-write (int fd, const void *buffer, unsigned length){
-  if(fd == 1) {
+write (int fd, const void *buffer, unsigned length) 
+{
+  if (fd == 1) {
     // writes to console
-    putbuf((const char *)buffer,length);
+    putbuf((const char *)buffer, length);
     return length;
   }
 }
